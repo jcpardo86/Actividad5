@@ -1,0 +1,47 @@
+<section>
+    <div class="container pt-3 card mt-3 bg-light">
+        <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Título:</label>
+                <input type="text" class="form-control form-control-sm" id="titulo" placeholder="Introduce tu título" [(ngModel)]="newNoticia.titulo" name="titulo">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="imagen" class="form-label">Imagen:</label>
+                <input type="file" class="form-control form-control-sm" id="imagen" [(ngModel)]="newNoticia.imagen" name="imagen" placeholder="Selecciona tu imagen">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="texto" class="form-label">Texto:</label>
+                <input type="text" class="form-control form-control-sm" id="texto" placeholder="Introduce el texto de tu noticia" [(ngModel)]="newNoticia.texto" name="texto">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha:</label>
+                <input type="date" class="form-control form-control-sm" id="fecha" [(ngModel)]="newNoticia.fecha" name="fecha" required>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 pad2y">
+        <button class="btn btn-primary btn-sm" (click)="guardarNoticia()">Agregar Noticia</button>
+    </div>
+    </div>
+    </div>
+    
+
+    <h1>Listado de noticias</h1>
+    <div [innerHTML]="cargarNoticias()">
+
+
+    </div>
+
+</section>
