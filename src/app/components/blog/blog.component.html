@@ -1,47 +1,41 @@
 <section>
-    <div class="container pt-3 card mt-3 bg-light">
-        <div class="row">
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label for="titulo" class="form-label">Título:</label>
-                <input type="text" class="form-control form-control-sm" id="titulo" placeholder="Introduce tu título" [(ngModel)]="newNoticia.titulo" name="titulo">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label for="imagen" class="form-label">Imagen:</label>
-                <input type="file" class="form-control form-control-sm" id="imagen" [(ngModel)]="newNoticia.imagen" name="imagen" placeholder="Selecciona tu imagen">
-            </div>
-        </div>
-    </div>
+    <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label for="texto" class="form-label">Texto:</label>
-                <input type="text" class="form-control form-control-sm" id="texto" placeholder="Introduce el texto de tu noticia" [(ngModel)]="newNoticia.texto" name="texto">
-            </div>
+    <!-- Barra lateral izquierda con el formulario -->
+    <nav class="col-md-3 bg-light">
+        <div class="container pt-3 card mt-3">
+        <h3 class="text-center">Formulario de Noticias</h3>
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título:</label>
+            <input type="text" class="form-control form-control-sm" id="titulo" placeholder="Introduce tu título" [(ngModel)]="newNoticia.titulo" name="titulo" [style.border-color]="seIntentoAgregar && !newNoticia.titulo ? 'red' : ''">
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label for="fecha" class="form-label">Fecha:</label>
-                <input type="date" class="form-control form-control-sm" id="fecha" [(ngModel)]="newNoticia.fecha" name="fecha" required>
-            </div>
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen:</label>
+            <input type="file" class="form-control form-control-sm" id="imagen" [(ngModel)]="newNoticia.imagen" name="imagen" placeholder="Selecciona tu imagen" alt="newNoticia.titulo"[style.border-color]="seIntentoAgregar && !newNoticia.imagen ? 'red' : ''">
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 pad2y">
-        <button class="btn btn-primary btn-sm" (click)="guardarNoticia()">Agregar Noticia</button>
-    </div>
-    </div>
-    </div>
-    
+        <div class="mb-3">
+            <label for="texto" class="form-label">Texto:</label>
+            <textarea class="form-control form-control-sm" id="texto" placeholder="Introduce el texto de tu noticia" [(ngModel)]="newNoticia.texto" name="texto" [style.border-color]="seIntentoAgregar && !newNoticia.texto ? 'red' : ''"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha:</label>
+            <input type="date" class="form-control form-control-sm" id="fecha" [(ngModel)]="newNoticia.fecha" name="fecha" required [style.border-color]="seIntentoAgregar && !newNoticia.fecha ? 'red' : ''">
+        </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary mb3" (click)="guardarNoticia()" [ngStyle]="{'background-color': seIntentoAgregar ? 'green' : ''}">
+            Agregar Noticia
+            </button>
+        </div>
+        </div>
+    </nav>
 
-    <h1>Listado de noticias</h1>
-    <div [innerHTML]="cargarNoticias()">
-
-
+    <!-- Área principal con el listado de noticias -->
+    <main class="col-md-9">
+        <div class="container pt-3 card mt-3 bg-light">
+        <h1 class="text-center">Listado de noticias</h1>
+        <div [innerHTML]="cargarNoticias()"></div>
+        </div>
+    </main>
     </div>
-
+</div>
 </section>
