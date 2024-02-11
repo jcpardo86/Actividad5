@@ -32,25 +32,34 @@ export class BlogComponent {
   seIntentoAgregar: boolean = false;
 
 //GUARDAR NOTICIA
-  guardarNoticia() {
-    this.seIntentoAgregar = true; // Indicamos que se intentó agregar una noticia
+guardarNoticia() {
+  this.seIntentoAgregar = true;
 
-    if (!this.newNoticia.titulo || !this.newNoticia.imagen || !this.newNoticia.texto || !this.newNoticia.fecha) {
-      alert("Por favor, completa todos los campos del formulario.");
-      return 
-    }
-
-    this.arrNoticias.unshift(this.newNoticia); // Utilizar unshift() para agregar la nueva noticia al principio del array
-    this.newNoticia = {
-      'titulo': '',
-      'imagen': '',
-      'texto': '',
-      'fecha': ''
-    };
-    //VUELVO A DARLE EL VALOR FALSE PARA QUE NO SE QUEDE EN ROJO.
-    this.seIntentoAgregar = false;
-    console.log(this.arrNoticias);
+  if (!this.newNoticia.titulo || !this.newNoticia.imagen || !this.newNoticia.texto || !this.newNoticia.fecha) {
+    alert("Por favor, completa todos los campos del formulario.");
+    return;
   }
+
+  this.arrNoticias.unshift(this.newNoticia);
+  this.newNoticia = { 'titulo': '', 'imagen': '', 'texto': '', 'fecha': '' }; // Resetear el objeto newNoticia
+
+  // Limpiar la vista previa de la imagen
+  const imagenPreview = document.getElementById('imagen-preview');
+  if (imagenPreview) {
+    imagenPreview.innerHTML = '';
+  }
+
+  // Restablecer el nombre del archivo seleccionado en el input de archivo
+  const inputFile = document.getElementById('imagen') as HTMLInputElement;
+  if (inputFile) {
+    inputFile.value = '';
+  }
+
+  //VUELVO A DARLE EL VALOR FALSE PARA QUE NO SE QUEDE EN ROJO.
+  this.seIntentoAgregar = false;
+  console.log(this.arrNoticias);
+}
+
 
   get arrNoticiasGrupos(): INoticia[][] {
     const grupos = [];
@@ -61,38 +70,54 @@ export class BlogComponent {
   }
 
   defaultImagen = "assets/img/300x200.svg";
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.newNoticia.imagen = reader.result as string;
+  
+        // Mostrar la vista previa de la imagen
+        const imagenPreview = document.getElementById('imagen-preview');
+        if (imagenPreview) {
+          imagenPreview.innerHTML = `<img src="${this.newNoticia.imagen}" style="max-width: 100%; height: auto;">`;
+        }
+      };
+    }
+  }
+  
 
   cargarNoticias(): string {
     let html = '';
 
-    const noticiaPrincipal = this.arrNoticias[0];
-    const defaultImagen = this.defaultImagen;
+  const noticiaPrincipal = this.arrNoticias[0];
+  const defaultImagen = this.defaultImagen;
 
-    if (noticiaPrincipal) {
-      const principalWidth = 200;
-      const principalHeight = 100;
-
-      html += `
-        <div class="container my-5">
-          <div class="row">
-            <div class="col-md-10 offset-md-1">
-              <div class="card mb-3">
-                <img src="${noticiaPrincipal.imagen || defaultImagen}" class="card-img-top" alt="${noticiaPrincipal.titulo}" style="max-width: ${principalWidth}px; max-height: ${principalHeight}px; object-fit: cover;">
-                <div class="card-body">
-                  <h5 class="card-title">${noticiaPrincipal.titulo} <span class="badge bg-primary">NEW!</span></h5>
-                  <p class="card-text">${noticiaPrincipal.texto}</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">${noticiaPrincipal.fecha}</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
+  if (noticiaPrincipal) {
+    const principalWidth = 200; // Tamaño máximo de ancho
+    const principalHeight = 100; // Tamaño máximo de alto
 
     html += `
+      <div class="container my-5">
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+          <div class="card mb-3">
+          <img src="${noticiaPrincipal.imagen || defaultImagen}" class="card-img-top" alt="${noticiaPrincipal.titulo}" style="max-width: 400px; max-height: 200px; width: auto; height: auto; object-fit: contain;">
+          <div class="card-body">
+            <h5 class="card-title">${noticiaPrincipal.titulo} <span class="badge bg-primary">NEW!</span></h5>
+            <p class="card-text">${noticiaPrincipal.texto}</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">${noticiaPrincipal.fecha}</small>
+          </div>
+        </div>
+        </div>
+      </div>
+    `;
+  }
+    
+      html += `
       <div class="container my-5">
         <div class="row justify-content-center">
     `;

@@ -11,8 +11,11 @@
         </div>
         <div class="mb-3">
             <label for="imagen" class="form-label">Imagen:</label>
-            <input type="file" class="form-control form-control-sm" id="imagen" [(ngModel)]="newNoticia.imagen" name="imagen" placeholder="Selecciona tu imagen" alt="newNoticia.titulo"[style.border-color]="seIntentoAgregar && !newNoticia.imagen ? 'red' : ''">
+            <input type="file" class="form-control form-control-sm" id="imagen" (change)="onFileSelected($event)" accept="image/*" [style.border-color]="seIntentoAgregar && !newNoticia.imagen ? 'red' : ''">
+            <div id="imagen-preview" class="mt-2"></div>
+            <div id="imagen-help" class="form-text">Selecciona una imagen para la noticia.
         </div>
+                </div>
         <div class="mb-3">
             <label for="texto" class="form-label">Texto:</label>
             <textarea class="form-control form-control-sm" id="texto" placeholder="Introduce el texto de tu noticia" [(ngModel)]="newNoticia.texto" name="texto" [style.border-color]="seIntentoAgregar && !newNoticia.texto ? 'red' : ''"></textarea>
@@ -22,8 +25,8 @@
             <input type="date" class="form-control form-control-sm" id="fecha" [(ngModel)]="newNoticia.fecha" name="fecha" required [style.border-color]="seIntentoAgregar && !newNoticia.fecha ? 'red' : ''">
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary mb3" (click)="guardarNoticia()" [ngStyle]="{'background-color': seIntentoAgregar ? 'green' : ''}">
-            Agregar Noticia
+            <button class="btn btn-primary mb-3" (click)="guardarNoticia()" [ngStyle]="{'background-color': seIntentoAgregar ? 'green' : ''}">
+                Agregar Noticia
             </button>
         </div>
         </div>
